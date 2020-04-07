@@ -24,29 +24,19 @@ export default class HomeScreen extends React.Component {
     });
   };
   addQues = () => {
-    const db = firebase.firestore();
-
-    db.collection("questions-answers")
-      .add({
-        question: this.state.question,
-        answer: this.state.answer,
-      })
-      .then(function () {
-        console.log("Document successfully written!");
-      })
-      .catch(function (error) {
-        console.error("Error writing document: ", error);
-      });
+    alert("It's added!");
+    firebase.database().ref("questions-answers").push({
+      question: this.state.question,
+      answer: this.state.answer,
+    });
   };
   ReadData = () => {
     const db = firebase.firestore();
     const { qs } = this.state;
-
     db.collection("questions-answers")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          //  console.log(doc.id, " => ", doc.data());
           qs.push(doc.data());
         });
 
@@ -56,43 +46,41 @@ export default class HomeScreen extends React.Component {
   componentDidMount() {
     this.ReadData();
   }
-  // var rand = qs[Math.floor(Math.random() * qs.length)];
   render() {
     let { question, answer, qs } = this.state;
     console.log(qs);
     return (
       <View style={styles.container}>
         <TextInput
-          style={styles.name}
+          style={styles.Input}
           placeholder="Enter Question"
           multiline={false}
-          onChangeText={this.handleChange}
-          onChangeText={(question) => {
-            this.setState({ question: question });
-          }}
-          value={this.state.name}
+          autoCapitalize="none"
+          placeholderTextColor="white"
+          name="question"
+          onChange={this.handleChange}
         />
         <TextInput
-          style={styles.name}
+          style={styles.Input}
           placeholder="Enter Answer"
           multiline={false}
-          onChangeText={(answer) => {
-            this.setState({ answer: answer });
-          }}
-          value={this.state.name}
+          autoCapitalize="none"
+          placeholderTextColor="white"
+          name="answer"
+          onChange={this.handleChange}
         />
         <TouchableOpacity
           style={styles.TouchableOpacity}
           onPress={this.addQues}
         >
-          <Text> add </Text>
+          <Text style={{ color: "#00cec9", fontSize: 25 }}> add </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.TouchableOpacity}
           onPress={this.ReadData}
         >
-          <Text> Quiz! </Text>
+          <Text style={{ color: "#00cec9", fontSize: 25 }}> Quiz! </Text>
         </TouchableOpacity>
       </View>
     );
@@ -100,21 +88,29 @@ export default class HomeScreen extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "black",
     flex: 1,
-    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  name: {
-    color: "green",
-    borderWidth: 2,
-    borderColor: "grey",
-    margin: 10,
+  Input: {
+    width: 345,
+    height: 50,
+    backgroundColor: "black",
+    margin: 5,
+
+    padding: 8,
+    borderColor: "white",
+    borderWidth: 1,
+
+    color: "white",
+    borderRadius: 14,
+    fontSize: 18,
+    fontWeight: "500",
   },
   TouchableOpacity: {
-    backgroundColor: "green",
     borderWidth: 2,
-    borderColor: "grey",
-    margin: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    borderColor: "white",
+    margin: 5,
   },
 });

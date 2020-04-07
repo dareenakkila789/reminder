@@ -18,7 +18,9 @@ const firebaseConfig = {
   measurementId: "G-4P8152PSVS",
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const Tabs = createBottomTabNavigator({
   Home: Home,
