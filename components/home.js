@@ -24,28 +24,36 @@ export default class HomeScreen extends React.Component {
     });
   };
   addQues = () => {
-    alert("It's added!");
-    firebase.database().ref("questions-answers").push({
-      question: this.state.question,
-      answer: this.state.answer,
-    });
-  };
-  ReadData = () => {
     const db = firebase.firestore();
-    const { qs } = this.state;
-    db.collection("questions-answers")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          qs.push(doc.data());
-        });
 
-        this.setState({ qs });
+    db.collection("questions-answers")
+      .add({
+        question: this.state.question,
+        answer: this.state.answer,
+      })
+      .then(function () {
+        console.log("Document successfully written!");
       });
+    // .catch(function (error) {defaultValue={question}
+    //   console.error("Error writing document: ", error);
+    // });
   };
-  componentDidMount() {
-    this.ReadData();
-  }
+  // ReadData = () => {
+  //   const db = firebase.firestore();
+  //   const { qs } = this.state;
+  //   db.collection("questions-answers")
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+  //         qs.push(doc.data());
+  //       });
+
+  //       this.setState({ qs });
+  //     });
+  // };
+  // componentDidMount() {
+  //   this.ReadData();
+  // }
   render() {
     let { question, answer, qs } = this.state;
     console.log(qs);
@@ -59,6 +67,7 @@ export default class HomeScreen extends React.Component {
           placeholderTextColor="white"
           name="question"
           onChange={this.handleChange}
+          defaultValue={question}
         />
         <TextInput
           style={styles.Input}
@@ -68,27 +77,28 @@ export default class HomeScreen extends React.Component {
           placeholderTextColor="white"
           name="answer"
           onChange={this.handleChange}
+          defaultValue={answer}
         />
         <TouchableOpacity
           style={styles.TouchableOpacity}
           onPress={this.addQues}
         >
-          <Text style={{ color: "#00cec9", fontSize: 25 }}> add </Text>
+          <Text style={{ color: "black", fontSize: 25 }}> add </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.TouchableOpacity}
           onPress={this.ReadData}
         >
-          <Text style={{ color: "#00cec9", fontSize: 25 }}> Quiz! </Text>
-        </TouchableOpacity>
+          <Text style={{ color: "black", fontSize: 25 }}> Quiz! </Text>
+        </TouchableOpacity> */}
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "black",
+    backgroundColor: "white",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -96,11 +106,11 @@ const styles = StyleSheet.create({
   Input: {
     width: 345,
     height: 50,
-    backgroundColor: "black",
+    backgroundColor: "red",
     margin: 5,
 
     padding: 8,
-    borderColor: "white",
+    borderColor: "black",
     borderWidth: 1,
 
     color: "white",
@@ -110,7 +120,7 @@ const styles = StyleSheet.create({
   },
   TouchableOpacity: {
     borderWidth: 2,
-    borderColor: "white",
+    borderColor: "blue",
     margin: 5,
   },
 });

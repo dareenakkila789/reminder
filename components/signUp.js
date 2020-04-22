@@ -112,9 +112,21 @@ export default class signUp extends React.Component {
           placeholderTextColor="white"
           onChangeText={(val) => this.onChangeText("Age", val)}
         />
-        <TouchableOpacity onPress={this.upload}>
+        <Button
+          style={{
+            padding: 300,
+            margin: 100,
+            width: 70,
+            height: 50,
+            alignItems: "center",
+          }}
+          onPress={() => this.upload}
+          title="SignUp"
+          color="#0000ff"
+        />
+        {/* <TouchableOpacity onPress={this.upload}>
           <Text style={{ color: "#00cec9", fontSize: 25 }}>Signup</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }
@@ -124,7 +136,7 @@ const styles = StyleSheet.create({
   input: {
     width: 345,
     height: 50,
-    backgroundColor: "black",
+    backgroundColor: "red",
     margin: 5,
 
     padding: 8,
@@ -137,7 +149,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   container: {
-    backgroundColor: "black",
+    backgroundColor: "white",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

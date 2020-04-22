@@ -10,7 +10,9 @@ import {
   Image,
   ScrollView,
   Linking,
+  NavLink,
 } from "react-native";
+import signUp from "./signUp";
 import * as firebase from "firebase";
 
 export default class login extends React.Component {
@@ -43,14 +45,24 @@ export default class login extends React.Component {
         alert(error.message);
       });
   };
+  moving = () => {
+    this.props.navigation.navigate("signUp");
+  };
+  moving1 = () => {
+    this.props.navigation.navigate("home");
+  };
 
+  functionCombined() {
+    this.moving1();
+    this.onlogin();
+  }
   render() {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        {/* <Image
-              style={{ width: 500, height: 500 }}
-              source={require("../assets/logo.png")}
-            /> */}
+        <Image
+          style={{ margin: 40, width: 100, height: 100 }}
+          source={require("../components/bell.png")}
+        />
 
         <TextInput
           value={this.state.email}
@@ -68,12 +80,22 @@ export default class login extends React.Component {
           style={styles.input}
         />
         <View style={styles.login}>
-          <TouchableOpacity onPress={this.onlogin}>
-            <Text style={{ color: "#00cec9", fontSize: 25 }}>Login</Text>
-          </TouchableOpacity>
-          <Text style={{ color: "white", margin: 10, fontSize: 18 }}> Or</Text>
-          <TouchableOpacity onPress={this.onSignup}>
-            <Text style={{ color: "#00cec9", fontSize: 25 }}>Signup</Text>
+          <View>
+            {/* <Button
+              onPress={() => this.onlogin}
+              title="Login"
+              color="#0000ff"
+            /> */}
+            <TouchableOpacity onPress={this.onlogin}>
+              <Text style={{ color: "black", fontSize: 25 }}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View>
+          <TouchableOpacity onPress={this.moving}>
+            <Text style={{ color: "black", fontSize: 25, marginTop: 5 }}>
+              You don't have an account?
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -85,10 +107,10 @@ const styles = StyleSheet.create({
   input: {
     width: 350,
     height: 55,
-    backgroundColor: "black",
+    backgroundColor: "red",
     margin: 10,
 
-    padding: 8,
+    padding: 4,
     borderColor: "white",
     borderWidth: 1,
 
@@ -98,7 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   container: {
-    backgroundColor: "black",
+    backgroundColor: "white",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -106,6 +128,10 @@ const styles = StyleSheet.create({
   login: {
     flex: 1,
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  vie: {
     justifyContent: "center",
     alignItems: "center",
   },
